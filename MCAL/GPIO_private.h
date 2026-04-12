@@ -1,7 +1,7 @@
 #ifndef GPIO_PRIVATE_H
 #define GPIO_PRIVATE_H
 
-#include "types.h"
+#include "Types.h"
 #define DDRA *((volatile u8*)0x3A)
 #define PORTA *((volatile u8*)0x3B)
 #define PINA *((volatile u8*)0x39)
