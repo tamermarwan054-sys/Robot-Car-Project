@@ -1,55 +1,47 @@
 /*
- * main.c
+ * main.c - Motor Direction Test (16 MHz)
  * Author: MARWAN
  */
 
-#define F_CPU 1000000UL
+#define F_CPU 16000000UL
 
 #include "Types.h"
 #include "gpio_private.h"
 #include "motor.h"
 
-/*
-    Manual delay calibrated for 1MHz internal RC
-    At 1MHz: 1 cycle = 1us
-    Inner loop = ~4 cycles (nop + loop overhead) x 250 = ~1ms per outer iteration
-*/
+/* ============================================= */
+/* Delay function - MUST be BEFORE main()       */
+/* ============================================= */
 static void delay_ms(u16 ms) {
     u16 i, j;
     for (i = 0; i < ms; i++)
-        for (j = 0; j < 250; j++)
-            asm volatile ("nop");
+        for (j = 0; j < 4000; j++)        // 4000 = real hardware
+            asm volatile ("nop");         // change to 100 only for fast Proteus
 }
 
+/* ============================================= */
 int main(void) {
-    DDRC |= (1 << 0);       // PC0 heartbeat LED
+    DDRC |= (1 << 0);      // PC0 heartbeat LED
     Motor_init();
 
     while (1) {
-        PORTC ^= (1 << 0);  // blink
+        PORTC ^= (1 << 0); // LED blinks to prove code is running
 
-        Motor_forward();
+        /* ================== TEST ONE DIRECTION AT A TIME ================== */
+        Motor_forward();      // ← change this to test others
         delay_ms(2000);
 
-        Motor_stop();
-        delay_ms(1000);
+        // Motor_backward();
+        // delay_ms(2000);
 
-        Motor_left();
-        delay_ms(1000);
+        // Motor_left();
+        // delay_ms(2000);
 
-        Motor_stop();
-        delay_ms(1000);
+        // Motor_right();
+        // delay_ms(2000);
 
-        Motor_backward();
-        delay_ms(2000);
-
-        Motor_stop();
-        delay_ms(1000);
-
-        Motor_right();
-        delay_ms(1000);
-
-        Motor_stop();
-        delay_ms(1000);
+        // Motor_stop();
+        // delay_ms(2000);
+        /* ================================================================ */
     }
 }
