@@ -11,11 +11,11 @@
  *
  * عدّل الـ RATIO والـ THRESHOLD حسب بطاريتك
  */
-#define BAT_ADC_CH           2
-#define BAT_DIVIDER_RATIO    4
+#define BAT_ADC_CH           3
+#define BAT_DIVIDER_RATIO    3
 #define BAT_VREF_MV          5000U
 #define BAT_ADC_RES          1024U
-#define BAT_LOW_THRESHOLD_MV 11000U
+#define BAT_LOW_THRESHOLD_MV 9000U
 
 /* Red LED → PD0 */
 #define BAT_LED_PIN  0
