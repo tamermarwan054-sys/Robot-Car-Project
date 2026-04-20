@@ -25,25 +25,30 @@ void Motor_init(void) {
 }
 
 void Motor_forward(void) {
-    // Left motor forward: IN1=1, IN2=0
+    /* Re-enable both motors */
+    setPin(ENA_PIN, 1);
+    setPin(ENB_PIN, 1);
+
     setPin(IN1_PIN, 1);
     setPin(IN2_PIN, 0);
-    // Right motor forward: IN3=1, IN4=0
     setPin(IN3_PIN, 1);
     setPin(IN4_PIN, 0);
 }
 
 void Motor_backward(void) {
-    // Left motor backward: IN1=0, IN2=1
+    setPin(ENA_PIN, 1);
+    setPin(ENB_PIN, 1);
+
     setPin(IN1_PIN, 0);
     setPin(IN2_PIN, 1);
-    // Right motor backward: IN3=0, IN4=1
     setPin(IN3_PIN, 0);
     setPin(IN4_PIN, 1);
 }
 
 void Motor_left(void) {
-    // Pivot left: left backward, right forward
+    setPin(ENA_PIN, 1);
+    setPin(ENB_PIN, 1);
+
     setPin(IN1_PIN, 0);
     setPin(IN2_PIN, 1);
     setPin(IN3_PIN, 1);
@@ -51,7 +56,9 @@ void Motor_left(void) {
 }
 
 void Motor_right(void) {
-    // Pivot right: left forward, right backward
+    setPin(ENA_PIN, 1);
+    setPin(ENB_PIN, 1);
+
     setPin(IN1_PIN, 1);
     setPin(IN2_PIN, 0);
     setPin(IN3_PIN, 0);
@@ -59,7 +66,11 @@ void Motor_right(void) {
 }
 
 void Motor_stop(void) {
-    // All IN pins low
+    /* Disable enable pins first — cuts current through H-bridge */
+    setPin(ENA_PIN, 0);   /* Left  motor OFF */
+    setPin(ENB_PIN, 0);   /* Right motor OFF */
+
+    /* Then clear direction pins */
     setPin(IN1_PIN, 0);
     setPin(IN2_PIN, 0);
     setPin(IN3_PIN, 0);
