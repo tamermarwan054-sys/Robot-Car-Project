@@ -17,8 +17,8 @@ void Battery_Init(void) {
 /*
  * Battery_Update
  * Read ADC on PA3, blink LED if battery is below 9V.
- * Battery LOW  (ADC < 563) → LED blinks 
- * Battery OK   (ADC >= 563) → LED stays off
+ * Battery LOW  (ADC < 460) → LED blinks 
+ * Battery OK   (ADC >= 460) → LED stays off
  */
 void Battery_Update(void) {
     static u8 toggle = 0u;   /* keeps blink state between calls */
