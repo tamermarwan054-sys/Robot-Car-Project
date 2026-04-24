@@ -1,6 +1,14 @@
 /*
  * main.c — Robot Car: Joystick + Battery Monitoring (16 MHz)
- * Author: MARWAN
+ * Authors: 
+ * MARWAN Tamer
+ * Maged Diyaa
+ * Ibrahim Salah
+ * Belal Barakat
+ * Rodaina 
+ * Jana mohamed
+ * Mariam Emad
+ * Masa Mostafa
  */
 
 #define F_CPU 16000000UL
@@ -11,7 +19,7 @@
 #include "adc.h"
 #include "motor.h"
 #include "joystick.h"
-#include "battery.h"          /* added */
+#include "battery.h"          
 
 
 static void delay_ms(u16 ms) {
@@ -24,9 +32,7 @@ static void delay_ms(u16 ms) {
 
 int main(void) {
 
-    /* Configure heartbeat LED */
-    setBit(DDRC, 0);          /* PC0 = output */
-
+    
     /* Initialize all modules — ADC must be first */
     ADC_Init();               /* joystick + battery both use ADC */
     Motor_init();             /* PD2–PD7 = outputs */
@@ -34,9 +40,6 @@ int main(void) {
     Battery_Init();           /* PD0 = output, LED off */
 
     while (1) {
-
-        /* Heartbeat — proves MCU is alive */
-        toggleBit(PORTC, 0);
 
         /* Read joystick → drive motors */
         Joystick_Direction dir = Joystick_GetDirection();
@@ -49,8 +52,8 @@ int main(void) {
             case JOY_STOP:      Motor_stop();      break;
         }
 
-        /* Check battery → blink red LED if below 11V */
-        Battery_Update();     /* added */
+        /* Check battery → blink red LED if below 9V */
+        Battery_Update();     
 
         delay_ms(100);
     }
