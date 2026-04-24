@@ -1,9 +1,9 @@
 #include "joystick.h"
 #include "joystick_private.h"
-#include "adc.h"          // We will create this in MCAL
+#include "adc.h"          
 
 void Joystick_Init(void) {
-    // ADC will be initialized in main or in MCAL init
+    
 }
 
 Joystick_Direction Joystick_GetDirection(void) {
