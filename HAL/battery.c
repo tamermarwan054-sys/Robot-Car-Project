@@ -1,8 +1,3 @@
-/*
- * battery.c — Battery Monitoring HAL
- * Reads voltage divider on PA3 every main loop iteration.
- * Blinks red LED on PD0 when battery drops below 9V.
- */
 #include "battery.h"
 #include "adc.h"              
 #include "GPIO_private.h"     
@@ -15,18 +10,17 @@ void Battery_Init(void) {
 }
 
 /*
- * Battery_Update
- * Read ADC on PA3, blink LED if battery is below 9V.
+ * blink LED if battery is below 9V.
  * Battery LOW  (ADC < 460) → LED blinks 
  * Battery OK   (ADC >= 460) → LED stays off
  */
 void Battery_Update(void) {
-    static u8 toggle = 0u;   /* keeps blink state between calls */
+    static u8 toggle = 0u;   /* keeps blink state */
 
     u16 adcValue = ADC_Read(BAT_ADC_CHANNEL);  /* PA3 = channel 3 */
 
     if (adcValue < BAT_ADC_THRESHOLD) {
-        /* Battery LOW — toggle LED every call */
+        /* Battery toggle LED */
         toggle ^= 1u;
         if (toggle)
             setBit(PORTD, BAT_LED_PIN);

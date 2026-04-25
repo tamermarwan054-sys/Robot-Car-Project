@@ -66,28 +66,14 @@ void Motor_right(void) {
 }
 
 void Motor_stop(void) {
-    /* Disable enable pins first — cuts current through H-bridge */
+    /* Disable enable pins */
     setPin(ENA_PIN, 0);   /* Left  motor OFF */
     setPin(ENB_PIN, 0);   /* Right motor OFF */
 
-    /* Then clear direction pins */
+    /* clear direction pins */
     setPin(IN1_PIN, 0);
     setPin(IN2_PIN, 0);
     setPin(IN3_PIN, 0);
     setPin(IN4_PIN, 0);
 }
 
-/* Speed control (simple on/off for now – later you can add PWM) */
-void Motor_setSpeedLeft(u8 speed) {
-    if (speed == 0)
-        setPin(ENA_PIN, 0);
-    else
-        setPin(ENA_PIN, 1);
-}
-
-void Motor_setSpeedRight(u8 speed) {
-    if (speed == 0)
-        setPin(ENB_PIN, 0);
-    else
-        setPin(ENB_PIN, 1);
-}

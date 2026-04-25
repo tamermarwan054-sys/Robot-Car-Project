@@ -1,7 +1,7 @@
 /*
  * main.c — Robot Car: Joystick + Battery Monitoring (16 MHz)
  * Authors: 
- * MARWAN Tamer
+ * Marwan Tamer
  * Maged Diyaa
  * Ibrahim Salah
  * Belal Barakat
@@ -32,8 +32,6 @@ static void delay_ms(u16 ms) {
 
 int main(void) {
 
-    
-    /* Initialize all modules — ADC must be first */
     ADC_Init();               /* joystick + battery both use ADC */
     Motor_init();             /* PD2–PD7 = outputs */
     Joystick_Init();
@@ -41,7 +39,7 @@ int main(void) {
 
     while (1) {
 
-        /* Read joystick → drive motors */
+        /* Read joystick --> drive motors */
         Joystick_Direction dir = Joystick_GetDirection();
 
         switch (dir) {
@@ -52,7 +50,7 @@ int main(void) {
             case JOY_STOP:      Motor_stop();      break;
         }
 
-        /* Check battery → blink red LED if below 9V */
+        /* Check battery --> blink red LED if below 9V */
         Battery_Update();     
 
         delay_ms(100);
