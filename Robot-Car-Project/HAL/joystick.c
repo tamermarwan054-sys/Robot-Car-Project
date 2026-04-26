@@ -1,8 +1,9 @@
+// joystick.c
 #include "joystick_interface.h"
+#include "joystick_private.h" 
 #include "adc.h"
 
 void Joystick_Init(void) {
-    /* ADC_Init() handles PA0/PA1 — nothing extra needed */
 }
 
 Joystick_Direction Joystick_GetDirection(void) {
