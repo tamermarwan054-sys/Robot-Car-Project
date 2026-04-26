@@ -2,7 +2,6 @@
 #define BATTERY_INTERFACE_H
 
 #include "Types.h"
-#include "battery_private.h"
 
 void Battery_Init(void);
 void Battery_Update(void);

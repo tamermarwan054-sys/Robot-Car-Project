@@ -2,7 +2,6 @@
 #define MOTOR_INTERFACE_H
 
 #include "Types.h"
-#include "motor_private.h"
 
 void Motor_init(void);
 void Motor_forward(void);

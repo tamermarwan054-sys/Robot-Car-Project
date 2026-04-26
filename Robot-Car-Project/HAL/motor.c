@@ -1,47 +1,61 @@
 #include "motor_interface.h"
-#include "GPIO_interface.h"
-#include "Bit_manipulation.h"
+#include "motor_private.h"   
 
 void Motor_init(void) {
-    setBit(DDRD, IN1_PIN);
-    setBit(DDRD, IN2_PIN);
-    setBit(DDRD, IN3_PIN);
-    setBit(DDRD, IN4_PIN);
-    setBit(DDRD, ENA_PIN);
-    setBit(DDRD, ENB_PIN);
+    GPIO_setPinDirections(GPIOD, IN1_PIN, OUTPUT);
+    GPIO_setPinDirections(GPIOD, IN2_PIN, OUTPUT);
+    GPIO_setPinDirections(GPIOD, IN3_PIN, OUTPUT);
+    GPIO_setPinDirections(GPIOD, IN4_PIN, OUTPUT);
+    GPIO_setPinDirections(GPIOD, ENA_PIN, OUTPUT);
+    GPIO_setPinDirections(GPIOD, ENB_PIN, OUTPUT);
 
-    setBit(PORTD, ENA_PIN);
-    setBit(PORTD, ENB_PIN);
+    GPIO_setPinValue(GPIOD, ENA_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, ENB_PIN, HIGH);
 
     Motor_stop();
 }
 
 void Motor_forward(void) {
-    setBit(PORTD, ENA_PIN);    setBit(PORTD, ENB_PIN);
-    setBit(PORTD, IN1_PIN);    clearBit(PORTD, IN2_PIN);
-    setBit(PORTD, IN3_PIN);    clearBit(PORTD, IN4_PIN);
+    GPIO_setPinValue(GPIOD, ENA_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, ENB_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN1_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN2_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN3_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN4_PIN, LOW);
 }
 
 void Motor_backward(void) {
-    setBit(PORTD, ENA_PIN);    setBit(PORTD, ENB_PIN);
-    clearBit(PORTD, IN1_PIN);  setBit(PORTD, IN2_PIN);
-    clearBit(PORTD, IN3_PIN);  setBit(PORTD, IN4_PIN);
+    GPIO_setPinValue(GPIOD, ENA_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, ENB_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN1_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN2_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN3_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN4_PIN, HIGH);
 }
 
 void Motor_left(void) {
-    setBit(PORTD, ENA_PIN);    setBit(PORTD, ENB_PIN);
-    clearBit(PORTD, IN1_PIN);  setBit(PORTD, IN2_PIN);
-    setBit(PORTD, IN3_PIN);    clearBit(PORTD, IN4_PIN);
+    GPIO_setPinValue(GPIOD, ENA_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, ENB_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN1_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN2_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN3_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN4_PIN, LOW);
 }
 
 void Motor_right(void) {
-    setBit(PORTD, ENA_PIN);    setBit(PORTD, ENB_PIN);
-    setBit(PORTD, IN1_PIN);    clearBit(PORTD, IN2_PIN);
-    clearBit(PORTD, IN3_PIN);  setBit(PORTD, IN4_PIN);
+    GPIO_setPinValue(GPIOD, ENA_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, ENB_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN1_PIN, HIGH);
+    GPIO_setPinValue(GPIOD, IN2_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN3_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN4_PIN, HIGH);
 }
 
 void Motor_stop(void) {
-    clearBit(PORTD, ENA_PIN);  clearBit(PORTD, ENB_PIN);
-    clearBit(PORTD, IN1_PIN);  clearBit(PORTD, IN2_PIN);
-    clearBit(PORTD, IN3_PIN);  clearBit(PORTD, IN4_PIN);
+    GPIO_setPinValue(GPIOD, ENA_PIN, LOW);
+    GPIO_setPinValue(GPIOD, ENB_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN1_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN2_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN3_PIN, LOW);
+    GPIO_setPinValue(GPIOD, IN4_PIN, LOW);
 }
