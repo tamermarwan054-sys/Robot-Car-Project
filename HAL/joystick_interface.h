@@ -1,7 +1,8 @@
-#ifndef JOYSTICK_H
-#define JOYSTICK_H
+#ifndef JOYSTICK_INTERFACE_H
+#define JOYSTICK_INTERFACE_H
 
 #include "Types.h"
+#include "joystick_private.h"
 
 typedef enum {
     JOY_FORWARD,
@@ -14,4 +15,4 @@ typedef enum {
 void Joystick_Init(void);
 Joystick_Direction Joystick_GetDirection(void);
 
-#endif /* JOYSTICK_H */
+#endif /* JOYSTICK_INTERFACE_H */

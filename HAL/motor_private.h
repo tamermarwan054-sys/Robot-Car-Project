@@ -11,7 +11,4 @@
 #define ENA_PIN     6
 #define ENB_PIN     7
 
-/* Bit masks for setting/clearing bits */
-#define BIT(bit) (1 << (bit))
-
 #endif /* MOTOR_PRIVATE_H */

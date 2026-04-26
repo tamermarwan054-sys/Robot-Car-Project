@@ -3,31 +3,23 @@
  */
 
 #include "adc.h"
-#include "GPIO_private.h"
-
-
-#define ADMUX   *((volatile u8*)0x27)   
-#define ADCSRA  *((volatile u8*)0x26)   
-#define ADCH    *((volatile u8*)0x25)   
-#define ADCL    *((volatile u8*)0x24)   
-
+#include "Bit_manipulation.h"
 
 void ADC_Init(void) {
-    /* ADMUX: REFS1=0 REFS0=1 → AVCC reference | ADLAR=0 → right adjusted */
-    ADMUX = 0x40;
-    ADCSRA = (1 << 7) | 7;       
+    setBit(ADMUX, 6);         /* REFS0 - AVCC reference  */
+    setBit(ADCSRA, 7);        /* ADEN  - Enable ADC       */
+    setBit(ADCSRA, 2);        /* ADPS2 - prescaler 128    */
+    setBit(ADCSRA, 1);        /* ADPS1                    */
+    setBit(ADCSRA, 0);        /* ADPS0                    */
 }
 
-
 u16 ADC_Read(u8 channel) {
-    
     ADMUX = (ADMUX & 0xE0) | (channel & 0x07);
-    ADCSRA |= (1 << 6);
-    while (ADCSRA & (1 << 6));
+    setBit(ADCSRA, 6);              /* ADSC - Start conversion */
+    while (readBit(ADCSRA, 6));     /* Wait until ADSC clears  */
 
-    /* Read ADCL first */
-    u8 low  = ADCL;     
-    u8 high = ADCH;     
+    u8 low  = ADCL;
+    u8 high = ADCH;
 
     return ((u16)high << 8) | low;
 }

@@ -1,79 +1,47 @@
-#include "motor.h"
-#include "motor_private.h"
-#include "gpio_private.h"
+#include "motor_interface.h"
+#include "GPIO_interface.h"
+#include "Bit_manipulation.h"
 
-/* Helper: set a pin high or low on PORT D */
-static void setPin(u8 pin, u8 value) {
-    if (value)
-        PORTD |= BIT(pin);
-    else
-        PORTD &= ~BIT(pin);
-}
-
-/* Initialize motor pins as outputs, enable both motors */
 void Motor_init(void) {
-    // Set PD2-PD7 as outputs
-    DDRD |= BIT(IN1_PIN) | BIT(IN2_PIN) | BIT(IN3_PIN) | BIT(IN4_PIN)
-          | BIT(ENA_PIN) | BIT(ENB_PIN);
-    
-    // Enable both motors (set ENA, ENB high)
-    setPin(ENA_PIN, 1);
-    setPin(ENB_PIN, 1);
-    
-    // Stop motors initially
+    setBit(DDRD, IN1_PIN);
+    setBit(DDRD, IN2_PIN);
+    setBit(DDRD, IN3_PIN);
+    setBit(DDRD, IN4_PIN);
+    setBit(DDRD, ENA_PIN);
+    setBit(DDRD, ENB_PIN);
+
+    setBit(PORTD, ENA_PIN);
+    setBit(PORTD, ENB_PIN);
+
     Motor_stop();
 }
 
 void Motor_forward(void) {
-    /* Re-enable both motors */
-    setPin(ENA_PIN, 1);
-    setPin(ENB_PIN, 1);
-
-    setPin(IN1_PIN, 1);
-    setPin(IN2_PIN, 0);
-    setPin(IN3_PIN, 1);
-    setPin(IN4_PIN, 0);
+    setBit(PORTD, ENA_PIN);    setBit(PORTD, ENB_PIN);
+    setBit(PORTD, IN1_PIN);    clearBit(PORTD, IN2_PIN);
+    setBit(PORTD, IN3_PIN);    clearBit(PORTD, IN4_PIN);
 }
 
 void Motor_backward(void) {
-    setPin(ENA_PIN, 1);
-    setPin(ENB_PIN, 1);
-
-    setPin(IN1_PIN, 0);
-    setPin(IN2_PIN, 1);
-    setPin(IN3_PIN, 0);
-    setPin(IN4_PIN, 1);
+    setBit(PORTD, ENA_PIN);    setBit(PORTD, ENB_PIN);
+    clearBit(PORTD, IN1_PIN);  setBit(PORTD, IN2_PIN);
+    clearBit(PORTD, IN3_PIN);  setBit(PORTD, IN4_PIN);
 }
 
 void Motor_left(void) {
-    setPin(ENA_PIN, 1);
-    setPin(ENB_PIN, 1);
-
-    setPin(IN1_PIN, 0);
-    setPin(IN2_PIN, 1);
-    setPin(IN3_PIN, 1);
-    setPin(IN4_PIN, 0);
+    setBit(PORTD, ENA_PIN);    setBit(PORTD, ENB_PIN);
+    clearBit(PORTD, IN1_PIN);  setBit(PORTD, IN2_PIN);
+    setBit(PORTD, IN3_PIN);    clearBit(PORTD, IN4_PIN);
 }
 
 void Motor_right(void) {
-    setPin(ENA_PIN, 1);
-    setPin(ENB_PIN, 1);
-
-    setPin(IN1_PIN, 1);
-    setPin(IN2_PIN, 0);
-    setPin(IN3_PIN, 0);
-    setPin(IN4_PIN, 1);
+    setBit(PORTD, ENA_PIN);    setBit(PORTD, ENB_PIN);
+    setBit(PORTD, IN1_PIN);    clearBit(PORTD, IN2_PIN);
+    clearBit(PORTD, IN3_PIN);  setBit(PORTD, IN4_PIN);
 }
 
 void Motor_stop(void) {
-    /* Disable enable pins */
-    setPin(ENA_PIN, 0);   /* Left  motor OFF */
-    setPin(ENB_PIN, 0);   /* Right motor OFF */
-
-    /* clear direction pins */
-    setPin(IN1_PIN, 0);
-    setPin(IN2_PIN, 0);
-    setPin(IN3_PIN, 0);
-    setPin(IN4_PIN, 0);
+    clearBit(PORTD, ENA_PIN);  clearBit(PORTD, ENB_PIN);
+    clearBit(PORTD, IN1_PIN);  clearBit(PORTD, IN2_PIN);
+    clearBit(PORTD, IN3_PIN);  clearBit(PORTD, IN4_PIN);
 }
-

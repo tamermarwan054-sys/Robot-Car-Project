@@ -1,12 +1,12 @@
 /*
  * main.c — Robot Car: Joystick + Battery Monitoring (16 MHz)
- * Authors: 
+ * Authors:
  * Marwan Tamer
  * Maged Diyaa
  * Ibrahim Salah
  * Belal Barakat
- * Rodaina 
- * Jana mohamed
+ * Rodaina
+ * Jana Mohamed,
  * Mariam Emad
  * Masa Mostafa
  */
@@ -14,13 +14,12 @@
 #define F_CPU 16000000UL
 
 #include "Types.h"
-#include "GPIO_private.h"
+#include "GPIO_interface.h"
 #include "Bit_manipulation.h"
 #include "adc.h"
-#include "motor.h"
-#include "joystick.h"
-#include "battery.h"          
-
+#include "motor_interface.h"
+#include "joystick_interface.h"
+#include "battery_interface.h"
 
 static void delay_ms(u16 ms) {
     u16 i, j;
@@ -29,17 +28,13 @@ static void delay_ms(u16 ms) {
             asm volatile ("nop");
 }
 
-
 int main(void) {
-
-    ADC_Init();               /* joystick + battery both use ADC */
-    Motor_init();             /* PD2–PD7 = outputs */
+    ADC_Init();
+    Motor_init();
     Joystick_Init();
-    Battery_Init();           /* PD0 = output, LED off */
+    Battery_Init();
 
     while (1) {
-
-        /* Read joystick --> drive motors */
         Joystick_Direction dir = Joystick_GetDirection();
 
         switch (dir) {
@@ -50,9 +45,7 @@ int main(void) {
             case JOY_STOP:      Motor_stop();      break;
         }
 
-        /* Check battery --> blink red LED if below 9V */
-        Battery_Update();     
-
+        Battery_Update();
         delay_ms(100);
     }
 }
