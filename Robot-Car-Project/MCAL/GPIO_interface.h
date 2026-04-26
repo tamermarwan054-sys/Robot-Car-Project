@@ -2,7 +2,7 @@
 #define GPIO_INTERFACE_H
 
 #include "Bit_manipulation.h"
-#include "GPIO_Private.h"
+
 
 typedef enum {
     GPIOA,

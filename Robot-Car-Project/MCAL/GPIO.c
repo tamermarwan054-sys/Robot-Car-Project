@@ -1,4 +1,5 @@
 #include "GPIO_Interface.h"
+#include "GPIO_Private.h"
 
 void GPIO_setPinDirections(port_t port, pin_t pin, direction_t direction) {
     switch (port) {
