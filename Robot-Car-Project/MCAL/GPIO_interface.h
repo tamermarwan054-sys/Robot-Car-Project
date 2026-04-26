@@ -38,8 +38,5 @@ void    GPIO_setPinValue       (port_t port, pin_t pin, value_t value);
 void    GPIO_togglePinValue    (port_t port, pin_t pin);
 value_t GPIO_readPinValue      (port_t port, pin_t pin);
 
-void    GPIO_setPortDirections (port_t port, direction_t direction);
-void    GPIO_setPortValue      (port_t port, u8 value);
-u8      GPIO_getPortValue      (port_t port);
 
 #endif /* GPIO_INTERFACE_H */
