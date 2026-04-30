@@ -14,7 +14,7 @@ void ADC_Init(void) {
 }
 
 u16 ADC_Read(u8 channel) {
-    ADMUX = (ADMUX & 11100000) | (channel & 00000111);
+    ADMUX = (ADMUX & 0xE0) | (channel & 0x07);
     setBit(ADCSRA, 6);              
     while (readBit(ADCSRA, 6));     
 
