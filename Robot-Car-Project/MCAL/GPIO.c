@@ -1,6 +1,6 @@
 #include "GPIO_Interface.h"
-
-void GPIO_setPinDirections(port_t port, pin_t pin, direction_t direction) {
+#include "GPIO_Private.h"
+void pinMode (port_t port, pin_t pin, direction_t direction) {
     switch (port) {
         case GPIOA:
             switch (direction) {
@@ -36,7 +36,7 @@ void GPIO_setPinDirections(port_t port, pin_t pin, direction_t direction) {
     }
 }
 
-void GPIO_setPinValue(port_t port, pin_t pin, value_t value) {
+void digitalWrite (port_t port, pin_t pin, value_t value) {
     switch (port) {
         case GPIOA:
             switch (value) {
@@ -68,16 +68,9 @@ void GPIO_setPinValue(port_t port, pin_t pin, value_t value) {
     }
 }
 
-void GPIO_togglePinValue(port_t port, pin_t pin) {
-    switch (port) {
-        case GPIOA: toggleBit(PORTA, pin); break;
-        case GPIOB: toggleBit(PORTB, pin); break;
-        case GPIOC: toggleBit(PORTC, pin); break;
-        case GPIOD: toggleBit(PORTD, pin); break;
-    }
-}
 
-value_t GPIO_readPinValue(port_t port, pin_t pin) {
+
+value_t digitalRead (port_t port, pin_t pin) {
     value_t value = LOW;
     switch (port) {
         case GPIOA: value = (value_t)readBit(PINA, pin); break;

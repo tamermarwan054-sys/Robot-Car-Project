@@ -16,7 +16,7 @@
 #include "Types.h"
 #include "GPIO_interface.h"
 #include "Bit_manipulation.h"
-#include "adc.h"
+#include "adc_interface.h"
 #include "motor_interface.h"
 #include "joystick_interface.h"
 #include "battery_interface.h"

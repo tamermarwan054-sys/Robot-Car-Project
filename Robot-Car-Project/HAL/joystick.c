@@ -1,9 +1,12 @@
 // joystick.c
 #include "joystick_interface.h"
 #include "joystick_private.h" 
-#include "adc.h"
+#include "adc_interface.h"
+#include "GPIO_interface.h"
 
 void Joystick_Init(void) {
+    pinMode(GPIOA, PIN0, INPUT); 
+    pinMode(GPIOA, PIN1, INPUT);
 }
 
 Joystick_Direction Joystick_GetDirection(void) {
